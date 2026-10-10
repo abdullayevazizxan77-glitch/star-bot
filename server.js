@@ -1,9 +1,19 @@
 const { Telegraf, Markup } = require('telegraf');
+const http = require('http');
 
 const BOT_TOKEN = '8871196144:AAFMy926uMZVSVqy2SZmXrE0L4ib2s7kY24';
 const ADMIN_CHAT_ID = '1184007742';
 
 const bot = new Telegraf(BOT_TOKEN);
+
+// Render port talabini qondirish uchun kichik HTTP server
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('7STAR Bot is running 24/7!\n');
+}).listen(PORT, '0.0.0.0', () => {
+    console.log(`HTTP server running on port ${PORT}`);
+});
 
 bot.start((ctx) => {
     ctx.reply("🌟 7STAR Brand Atelier botiga xush kelibsiz!");
