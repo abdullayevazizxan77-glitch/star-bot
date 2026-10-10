@@ -6,7 +6,7 @@ const ADMIN_CHAT_ID = '1184007742';
 
 const bot = new Telegraf(BOT_TOKEN);
 
-// Render port talabini qondirish uchun kichik HTTP server
+// 1. Render port talabini qondirish uchun HTTP serverni birinchi bo'lib yoqamiz
 const PORT = process.env.PORT || 3000;
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -46,5 +46,11 @@ bot.action(/^reject_(.+)$/, async (ctx) => {
     ctx.editMessageCaption("❌ To'lov rad etildi.");
 });
 
-bot.launch();
-console.log("🚀 7STAR Telegram Bot muvaffaqiyatli ishga tushdi!");
+// 2. Port ochilgandan keyin 2 soniya kutib, botni xavfsiz ishga tushiramiz
+setTimeout(() => {
+    bot.launch().then(() => {
+        console.log("🚀 7STAR Telegram Bot muvaffaqiyatli ishga tushdi!");
+    }).catch(err => {
+        console.error("Botni ishga tushirishda xatolik:", err);
+    });
+}, 2000);
